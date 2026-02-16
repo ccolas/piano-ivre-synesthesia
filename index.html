@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Piano Ivre - Synesthesias</title>
+<title>Le Piano Ivre - Synesthesia Archive</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f3b9;</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: #010138;
     color: #e0e0ff;
     min-height: 100vh;
@@ -18,7 +18,7 @@ body {
     padding: 2rem 1rem;
 }
 .card {
-    max-width: 520px;
+    max-width: 600px;
     width: 100%;
     background: linear-gradient(135deg, rgba(5,3,69,0.97), rgba(2,1,50,0.98));
     border: 1px solid #1E3542;
@@ -27,7 +27,8 @@ body {
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 h1 {
-    font-size: 1.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 0.3em;
     color: #fe4791;
@@ -40,37 +41,49 @@ h1 {
     color: rgba(254,71,145,0.5);
     letter-spacing: 0.2em;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
-.section-label {
-    font-size: 0.65rem;
+.intro {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(224,224,255,0.8);
+    margin-bottom: 1.5rem;
+}
+.intro a { color: #535de6; text-decoration: none; }
+.intro a:hover { color: #60A5FA; }
+.intro em { color: rgba(224,224,255,0.6); }
+h2 {
+    font-size: 0.7rem;
+    font-weight: 600;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #fe4791;
     margin-bottom: 0.8rem;
+    margin-top: 1.5rem;
 }
 .entry {
     display: block;
-    padding: 0.7rem 0;
+    padding: 0.6rem 0;
     border-bottom: 1px solid #1E3542;
     color: #535de6;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     transition: color 0.2s;
 }
 .entry:hover { color: #60A5FA; }
-.entry-date { font-style: italic; }
 #loading {
     font-style: italic;
-    color: rgba(224,224,255,0.5);
+    color: rgba(224,224,255,0.4);
     text-align: center;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
 }
 #error {
     color: #fe4791;
     text-align: center;
     padding: 1rem 0;
     display: none;
+    font-size: 0.9rem;
 }
 .footer {
     text-align: center;
@@ -82,23 +95,36 @@ h1 {
     color: #535de6;
     text-decoration: none;
     font-size: 0.85rem;
-    font-style: italic;
 }
 .footer a:hover { color: #60A5FA; }
 </style>
 </head>
 <body>
 <div class="card">
-    <h1>PIANO IVRE</h1>
+    <h1>LE PIANO IVRE</h1>
     <p class="tagline">get a sip of music</p>
 
-    <div class="section-label">Past synesthesias</div>
+    <div class="intro">
+        <p>This is the synesthesia archive of <a href="https://cedriccolas.com/project/pianocktail">Le Piano Ivre</a>,
+        a pianocktail that transforms piano music into cocktail recipes.</p>
+        <br>
+        <p>Each entry below is a unique moment where music became taste. When someone plays piano
+        (or uploads a recording), <em>Le Piano Ivre</em> analyzes the music and creates a
+        corresponding cocktail recipe capturing the mood of the song.</p>
+        <br>
+        <p>Inspired by Boris Vian's novel <em>L'&Eacute;cume des jours</em> (1947), which features
+        a pianocktail &mdash; a piano that mixes drinks based on the music played.</p>
+    </div>
+
+    <h2>Past synesthesias</h2>
     <div id="list"></div>
     <div id="loading">Loading&hellip;</div>
     <div id="error"></div>
 
     <div class="footer">
         <a href="https://cedriccolas.com/project/pianocktail">cedriccolas.com/project/pianocktail</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://cedriccolas.com">cedriccolas.com</a>
     </div>
 </div>
 <script>
@@ -128,14 +154,10 @@ h1 {
                 const a = document.createElement('a');
                 a.className = 'entry';
                 a.href = f.name + '/';
-                const pretty = f.name.replace(/_/g, ' ').replace(/-/g, '/').replace(/\//g, function(m, offset) {
-                    return offset < 10 ? '/' : ':';
-                });
-                // Format: YYYY/MM/DD HH:MM:SS
                 const parts = f.name.split('_');
                 const datePart = parts[0].replace(/-/g, '/');
                 const timePart = parts[1].replace(/-/g, ':');
-                a.innerHTML = '<span class="entry-date">' + datePart + ' &mdash; ' + timePart + '</span>';
+                a.textContent = datePart + ' — ' + timePart;
                 listEl.appendChild(a);
             });
         })
